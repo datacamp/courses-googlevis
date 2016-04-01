@@ -30,7 +30,6 @@ First, you will need to load data on a country's evolution of life expectancy, G
 Have a look at the code for `life_expectancy` on how to load `gdp` and `population`. Do not forget, no API key is required. 
 
 *** =pre_exercise_code
-
 ```{r,eval=FALSE}
 library("rdatamarket")
 load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex1.RData"))
@@ -40,32 +39,8 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis
 # subset van population = dmlist("1cfl!r3d")
 ```
 
-*** =solution
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
-# Load the `rdatamarket` package
-library("rdatamarket")
-
-# Initialize a DataMarket client
-dminit(NULL)
-
-# Inspect the variable `life_expectancy`
-life_expectancy = dmlist("15r2!hrp")
-head(life_expectancy)
-tail(life_expectancy)
-
-# Load in the yearly GDP data frame for each country
-gdp = dmlist("15c9!hd1")
-
-# Inspect the variable `population`.
-head(population)
-tail(population)
-
-```
-
 *** =sample_code
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
+```{r}
 # Load the `rdatamarket` package
 library("rdatamarket")
 
@@ -73,19 +48,40 @@ library("rdatamarket")
 dminit(NULL)
 
 # Inspect the variable `life_expectancy`
-life_expectancy = dmlist("15r2!hrp")
+life_expectancy <- dmlist("15r2!hrp")
 
 # Load in the yearly GDP data frame for each country
-gdp = 
+gdp <-
 
 # Inspect the variable `population`.
 population
 
 ```
 
-*** =sct
+*** =solution
+```{r}
+# Load the rdatamarket package
+library("rdatamarket")
 
-```{r,eval=FALSE}
+# Initialize a DataMarket client
+dminit(NULL)
+
+# Inspect the variable life_expectancy
+life_expectancy <- dmlist("15r2!hrp")
+head(life_expectancy)
+tail(life_expectancy)
+
+# Load in the yearly GDP data frame for each country
+gdp <- dmlist("15c9!hd1")
+
+# Inspect the variable population.
+head(population)
+tail(population)
+```
+
+
+*** =sct
+```{r}
 if (!exists("life_expectancy")) {
   DM.result = list(FALSE,"Did you assign to `life_expectancy` the evolution of a country's life expectancy over the past years?")
 } else if (! exists("gdp")) {
@@ -147,47 +143,44 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis
 # correct_development= join(correct_development,population)
 ```
 
-*** =solution
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
-# load in the `plyr` package
-library("plyr")
-
-# Make the column name "Values" for each dataset more descriptive and unique
-names(gdp)[3] = "GDP"
-names(life_expectancy)[3] = "Life Expectancy"
-names(population)[3] = "Population"
-
-# Use plyr to join your three data frames into one: `development` 
-development = join(gdp,life_expectancy)
-development = join(development,population)
-
-#Make sure no data beyond 2008 is included
-development_final = development[development$Year <= 2008,]
-```
-
 *** =sample_code
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
+```{r}
 # load in the `plyr` package
 library("plyr")
 
 # Make the column name "Values" for each dataset more descriptive and unique
-names(gdp)[3] = "GDP"
+names(gdp)[3] <- "GDP"
 
 
-# Use plyr to join your three data frames into one: `development` 
-development = join(___,___)
-development = join(___,___)
+# Use plyr to join your three data frames into one: development 
+development <- join(___, ___)
+development <- join(___, ___)
 
 #Make sure no data beyond 2008 is included
 development_final = 
-
 ```
 
-*** =sct
+*** =solution
+```{r}
+# load in the `plyr` package
+library("plyr")
 
-```{r,eval=FALSE}
+# Make the column name "Values" for each dataset more descriptive and unique
+names(gdp)[3] <- "GDP"
+names(life_expectancy)[3] <- "Life Expectancy"
+names(population)[3] <- "Population"
+
+# Use plyr to join your three data frames into one: `development` 
+development <- join(gdp,life_expectancy)
+development <- join(development,population)
+
+#Make sure no data beyond 2008 is included
+development_final <- development[development$Year <= 2008,]
+```
+
+
+*** =sct
+```{r}
 if (! (names(gdp)[3] == "GDP")){
   DM.result = list(FALSE,"Seems like you changed the code to rename the column values of `gdp`.")
 } else if (! (names(life_expectancy)[3] == "Life Expectancy")){
@@ -225,13 +218,12 @@ The `gvisMotionChart()` function in its simplest form takes 3 arguments. The fir
 *** =hint
 The `idvar` argument should be equal to "Country" and the `timevar` argument to "Year". Your function will now look something like `gvisMotionChart(data,idvar = "Country",timevar = "Year"). 
 
-
 *** =pre_exercise_code
-
-```{r,eval=FALSE}
+```{r}
 library("rdatamarket")
 library("plyr")
 library("googleVis")
+options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex3.RData"))
 #life_expectancy = dmlist("15r2!hrp")
 #gdp = dmlist("15c9!hd1")
@@ -246,9 +238,22 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis
 #selection <- c("Afghanistan","Australia","Austria","Belgium","Bolivia","Brazil","Cambodia","Azerbaijan", "Chile","China","Denmark","Estonia","Ethiopia","Finland","France" ,"Georgia","Germany","Ghana","Greece","India","Indonesia","Iraq","Italy","Japan","Lithuania","Luxembourg","Mexico","New Zealand", "Niger", "Norway", "Poland", "Portugal","Rwanda", "Somalia", "South Africa", "Spain", "Sweden", "Switzerland", "Turkey","Uganda", "Ukraine", "United Kingdom", "United States", "Vietnam")
 ```
 
-*** =solution
 
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
+*** =sample_code
+```{r}
+# Include only the countries from `selection` in the interactive motion chart
+selection
+development_motion = 
+  
+# Create the interactive motion chart with R and `gvisMotionChart`
+my_motion_graph = gvisMotionChart(___,___,___)
+
+# Plot you motion graph with the help of `plot()`
+
+```
+
+*** =solution
+```{r}
 # Include only the countries from `selection` in the interactive motion chart
 selection
 development_motion = subset(development_final, Country %in% selection)
@@ -263,23 +268,8 @@ my_motion_graph = gvisMotionChart(development_motion,
 plot(my_motion_graph)
 ```
 
-*** =sample_code
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
-# Include only the countries from `selection` in the interactive motion chart
-selection
-development_motion = 
-  
-# Create the interactive motion chart with R and `gvisMotionChart`
-my_motion_graph = gvisMotionChart(___,___,___)
-
-# Plot you motion graph with the help of `plot()`
-
-```
-
 *** =sct
-
-```{r,eval=FALSE}
+```{r}
 gvisMotionChart_args = c("data","idvar","timevar")
 student_gvisMotionChart_args =try(names(get_arguments("gvisMotionChart")[[1]]))
 standard_feedback_message = "Looks like you forgot to set in `gvisMotionChart()` the arguments"
@@ -335,11 +325,11 @@ Time to set this into action...
 The four arguments you should add are xvar = "GDP", yvar = "Life Expectancy", colorvar = "Country",and sizevar = "Population".
 
 *** =pre_exercise_code
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
+```{r}
 library("rdatamarket")
 library("plyr")
 library("googleVis")
+options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex4.RData"))
 #life_expectancy = dmlist("15r2!hrp")
 #gdp = dmlist("15c9!hd1")
@@ -354,30 +344,9 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis
 #selection <- c("Afghanistan","Australia","Austria","Belgium","Bolivia","Brazil","Cambodia","Azerbaijan", "Chile","China","Denmark","Estonia","Ethiopia","Finlan"""France","Georgia","Germany","Ghana","Greece","India","Indonesia","Iraq","Italy", "Japan","Lithuania","Luxembourg","Mexico","New Zealand", "Niger", "Norway", "Poland", "Portugal","Rwanda", "Somalia", "South Africa", "Spain", "Sweden", "Switzerland", "Turkey", "Uganda", "Ukraine", "United Kingdom", "United States", "Vietnam")
 ```
 
-*** =solution
-
-```{r,eval=FALSE}
-# Include only the countries from `selection` in the interactive motion chart
-selection
-development_motion = subset(development_final, Country %in% selection)
-  
-# Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph = gvisMotionChart(development_motion,
-                    idvar = "Country",
-                    timevar = "Year",
-                    xvar = "GDP",
-                    yvar = "Life Expectancy",
-                    colorvar = "Country",
-                    sizevar = "Population"
-)
-
-# Plot you motion graph with the help of `plot()`
-plot(my_motion_graph)
-```
 
 *** =sample_code
-
-```{r, eval=FALSE, results="asis", cache=FALSE, echo=TRUE, tidy=FALSE}
+```{r}
 
 # Include only the countries from `selection` in the interactive motion chart
 selection
@@ -396,9 +365,28 @@ my_motion_graph = gvisMotionChart(development_motion,
 # Plot you new motion graph with the help of `plot()`
 ```
 
-*** =sct
+*** =solution
+```{r}
+# Include only the countries from `selection` in the interactive motion chart
+selection
+development_motion = subset(development_final, Country %in% selection)
+  
+# Create the interactive motion chart with R and `gvisMotionChart())`
+my_motion_graph = gvisMotionChart(development_motion,
+                    idvar = "Country",
+                    timevar = "Year",
+                    xvar = "GDP",
+                    yvar = "Life Expectancy",
+                    colorvar = "Country",
+                    sizevar = "Population"
+)
 
-```{r,eval=FALSE}
+# Plot you motion graph with the help of `plot()`
+plot(my_motion_graph)
+```
+
+*** =sct
+```{r}
 gvisMotionChart_args = c("data","idvar","timevar", "xvar","yvar","colorvar","sizevar")
 student_gvisMotionChart_args =try(names(get_arguments("gvisMotionChart")[[1]]))
 standard_feedback_message = "Looks like you forgot to set in `gvisMotionChart()` the arguments"
@@ -439,21 +427,20 @@ To test your understanding of the data, you end this demo chapter by solving the
 <i> All the datasets and variables you constructed in the previous exercises are preloaded in your workspace.  Type 'ls()' in the console to see them.</i>
 
 *** =instructions
-  - 81,653,702 Germans producing a GDP of 11,746
-  - 78,297,904 Germans producing a GDP of 11,746
-  - 78,297,904 Germans producing a GDP of 72,2
-  - 81,653,702 Germans producing a GDP of 30,888
+- 81,653,702 Germans producing a GDP of 11,746
+- 78,297,904 Germans producing a GDP of 11,746
+- 78,297,904 Germans producing a GDP of 72,2
+- 81,653,702 Germans producing a GDP of 30,888
 
 *** =hint
-
 You can still have a look at your interactive motion chart by typing `plot(my_motion_graph_avanced)` into the console. 
 
 *** =pre_exercise_code
-
-```{r,eval=FALSE}
+```{r}
 library("rdatamarket")
 library("plyr")
 library("googleVis")
+options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex5.RData"))
 #life_expectancy = dmlist("15r2!hrp")
 #gdp = dmlist("15c9!hd1")
@@ -467,21 +454,14 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis
 #development_final$Country <-as.character(development_final$Country)
 #selection <- c("Afghanistan","Australia","Austria","Belgium","Bolivia","Brazil","Cambodia","Azerbaijan", "Chile","China","Denmark","Estonia","Ethiopia","Finland","France","Georgia","Germany","Ghana","Greece","India","Indonesia","Iraq","Italy","Japan","Lithuania","Luxembourg","Mexico","New Zealand", "Niger", "Norway", "Poland", "Portugal","Rwanda", "Somalia", "South Africa", "Spain", "Sweden", "Switzerland", "Turkey","Uganda", "Ukraine", "United Kingdom", "United States", "Vietnam")
 #development_motion = subset(development_final, Country %in% selection)
-#my_motion_graph = gvisMotionChart(development_motion,idvar = "Country",timevar = "Year",xvar = "GDP",yvar = "Life Expectancy",colorvar = "Country",sizevar = "Population")
-
-
+my_motion_graph = gvisMotionChart(development_motion,idvar = "Country",timevar = "Year",xvar = "GDP",yvar = "Life Expectancy",colorvar = "Country",sizevar = "Population")
 ```
 
 *** =sct
-
 ```{r,eval=FALSE}
-if ( !exists("DM.result") ){
-  DM.result = list(FALSE, "Please select one of the options!")
-} else if ( identical(DM.result, 2) ){
-  DM.result = list(TRUE, "Wunderbar! We hope you enjoyed doing this demo on DataCamp. In the future we plan to do more courses on using interactive visualizations to analyze and present your data via R and googleVis. In the mean time, keep practicing, and maybe you can, sometime, share the stage with Hans Rosling.")
-} else {
-  DM.result = list(FALSE, "Have another look at your graph. Use the hint if you need extra help.")
-}
+msg <- "Have another look at your graph. Use the hint if you need extra help."
+okmsg <- "Wunderbar! We hope you enjoyed doing this demo on DataCamp. In the future we plan to do more courses on using interactive visualizations to analyze and present your data via R and googleVis. In the mean time, keep practicing, and maybe you can, sometime, share the stage with Hans Rosling."
+test_mc(2, c(msg, okmsg, msg, msg))
 ```
 
 
