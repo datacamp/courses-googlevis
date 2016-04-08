@@ -103,66 +103,64 @@ test_or(test_output_contains("head(gdp)"),
 success_msg("Good job! Now that you've imported the data, continue to the next exercise to start the real work.")
 ```
 
+
 --- type:NormalExercise lang:r xp:100 skills:1,4
 ##  Preparing the data
 
-Now you have the following three different datasets at your disposal: `life_expectancy`, `gdp`, and `population`. As of now, these datasets will always be preloaded in all the exercises' workspace so you can access and use them at any time.  
+Now you have the following three different datasets at your disposal: `life_expectancy`, `gdp`, and `population`. As of now, these datasets will always be preloaded in all the exercises' workspaces so you can access and use them at any time.  
 
 If you've applied the [`head()`](http://www.rdocumentation.org/packages/multivator/functions/head) and/or [`tail()`](http://www.rdocumentation.org/packages/multivator/functions/head) function to these variables you've probably noticed that: 
 
 - Not all column names are named properly: the string "Value" is used to name the GDP value, the life expectancy value, and the population value. It would be better if you could make these more descriptive and unique for each. (Tip: use `names()` to see the column names of a dataset.) 
 - Our data is only complete until 2008. 
 
-These issues should be fixed before you start creating your graph. In addition, if you want to map all three development statistics into one interactive graph (and you should because it is extremely cool), you will have to merge your three data frames into one called `development`. One standard way to do this is as follows:
+These issues should be fixed before you start creating your graph. In addition, if you want to map all three development statistics into one interactive graph (and you should because it is extremely cool), you will have to merge your three data frames into one called `development`. 
 
-`development = merge(gdp,life_expectancy, by = c("Country","Year"))`
-`development = merge(development,population, by = c("Country","Year"))`
-
-However, in this exercise you will be required to do it with the [`join()`](http://www.rdocumentation.org/packages/adehabitatMA/html/join.html) function from the [`plyr()`](http://www.rdocumentation.org/packages/plyr/functions/plyr) package. You can read more on how to use the `join` function by typing `?join` in your console.      
+In this exercise you will be required to do this with the [`join()`](http://www.rdocumentation.org/packages/adehabitatMA/html/join.html) function from the [`plyr()`](http://www.rdocumentation.org/packages/plyr/functions/plyr) package. You can read more on how to use it by typing `?join` in your console.      
 
 *** =instructions
-- The code to rename the column name "Value" to `"GDP"` for the `gdp` dataset is provided. Now rename the column name "Value" in the other two datasets to respectively `"Population"` and `"Life Expectancy"`.
-- Use `plyr()` and its `join()` function to merge our three data frames into one data frame `development`. In this case, you want to join on all common variables: "Country" and "Year". Joining on all common variables means the `by` argument is not required.
+- The code to rename `Value` variable to `GDP` for the `gdp` dataset is provided. Now rename the column name `Value` in the other two datasets to respectively `Population` and `LifeExpectancy`.
+- Finish the `join()` calls so that:
+  + `gdp` and `life_expectancy` are joined into `gdp_life_exp`, 
+  + `gdp_life_exp` and `population` are joined into `development`.
+  There's no need to specify additional arguments, because you want to join on all common variables (`Country` and `Year` in this case).
 
 *** =hint
-Joining our three data frames into one is very easy in this case. If you have 3 datasets to join, `data_one`, `data_two` and `data_three`, on all common variables, you go in steps: `data_total = join(data_one, data_two)` and then `data_total = join(data_total, data_three)`. So every `join()` only needs two arguments here.
-
+Joining our three data frames into one is very easy in this case. If you have 3 datasets to join, `data_one`, `data_two` and `data_three`, on all common variables, you go in steps: `data_one_two <- join(data_one, data_two)` and then `data_total <- join(data_one_two, data_three)`. So every `join()` only needs two arguments here.
 
 *** =pre_exercise_code
-
 ```{r,eval=FALSE}
 library("rdatamarket")
-library("plyr")
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex2.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/course/1007/datasets/ex2.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# load in the `plyr` package
+# Load in the plyr package
 library("plyr")
 
-# Make the column name "Values" for each dataset more descriptive and unique
+# Rename the Value for each dataset
 names(gdp)[3] <- "GDP"
 
 
 # Use plyr to join your three data frames into one: development 
-development <- join(gdp, ___)
-development <- join(___, ___)
+gdp_life_exp <- join(gdp, ___)
+development <- join(gdp_life_exp, ___)
 ```
 
 *** =solution
 ```{r}
-# load in the `plyr` package
+# Load in the plyr package
 library("plyr")
 
-# Make the column name "Values" for each dataset more descriptive and unique
+# Rename the Value for each dataset
 names(gdp)[3] <- "GDP"
-names(life_expectancy)[3] <- "Life Expectancy"
+names(life_expectancy)[3] <- "LifeExpectancy"
 names(population)[3] <- "Population"
 
 # Use plyr to join your three data frames into one: `development` 
-development <- join(gdp,life_expectancy)
-development <- join(development,population)
+gdp_life_exp <- join(gdp, life_expectancy)
+development <- join(gdp_life_exp, population)
 ```
 
 
@@ -170,20 +168,14 @@ development <- join(development,population)
 ```{r}
 test_error()
 
-# Instruction 1
-test_data_frame("gdp",
-                undefined_msg = "It seems like you changed the code to rename the column values of `gdp`.",
-                undefined_cols_msg = "It seems like you changed the code to rename the column values of `gdp`.")
-test_data_frame("life_expectancy",
-                undefined_msg = "Have a look at how the column values of `gdp` were renamed. Do the same for `life_expectancy`.",
-                undefined_cols_msg = "Have a look at how the column values of `gdp` were renamed. Do the same for `life_expectancy`.")
-test_data_frame("population",
-                undefined_msg = "Have a look at how the column values of `gdp` were renamed. Do the same for `population`.",
-                undefined_cols_msg = "Have a look at how the column values of `gdp` were renamed. Do the same for `population`.")
+msg <- "Don't change the code that renames the `Value` column of `gdp`."
+test_data_frame("gdp", "GDP", undefined_cols_msg = msg, incorrect_msg = msg)
+msg <- "Have you correctly renamed the `Value` column of `%s`? Take the code for `gdp` as an example."
+test_data_frame("life_expectancy", "LifeExpectancy", undefined_cols_msg = sprintf(msg, "life_expectancy"), incorrect_msg = sprintf(msg, "life_expectancy"))
+test_data_frame("population", "Population", undefined_cols_msg = sprintf(msg, "life_expectancy"), incorrect_msg = sprintf(msg, "life_expectancy"))
 
-# Instruction 2
-test_function("join",
-              incorrect_msg = "Looks like you did not use the join() formula to correctly to merge your data frames.")
+test_object("gdp_life_exp", msg = "Have you correctly joined `gdp` and `life_expectancy` to create `gdp_life_exp`?")
+test_object("development", msg = "Have you correclty joined `gdp_life_exp` and `population` to create `development`?")
 
 success_msg("Your data is almost ready! Only one more set of data preparations and you can start to make some sweet visualizations!")
 ```
@@ -219,7 +211,7 @@ library("rdatamarket")
 library("plyr")
 load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex2.RData"))
 names(gdp)[3] <- "GDP"
-names(life_expectancy)[3] <- "Life Expectancy"
+names(life_expectancy)[3] <- "LifeExpectancy"
 names(population)[3] <- "Population"
 development <- join(gdp,life_expectancy)
 development <- join(development,population)
