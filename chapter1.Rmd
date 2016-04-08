@@ -278,7 +278,6 @@ The `idvar` argument should be equal to `"Country"` and the `timevar` argument t
 
 *** =pre_exercise_code
 ```{r,eval=FALSE}
-library("ggvis")
 library("googleVis")
 options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
@@ -292,8 +291,8 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/dat
 my_motion_graph <- gvisMotionChart(___,
                                    idvar = ___,
                                    timevar = ___,
-                                   options = list(height = 'automatic', 
-                                                  width = 'automatic'))
+                                   options = list(height = "automatic", 
+                                                  width = "automatic"))
                                   
 # Plot you motion graph with the help of `plot()`
 
@@ -307,8 +306,8 @@ my_motion_graph <- gvisMotionChart(___,
 my_motion_graph <- gvisMotionChart(development_motion,
                                    idvar = "Country",
                                    timevar = "Year",
-                                   options = list(height = 'automatic', 
-                                                  width = 'automatic'))
+                                   options = list(height = "automatic", 
+                                                  width = "automatic"))
 
 # Plot you motion graph with the help of `plot()`
 plot(my_motion_graph)
@@ -329,26 +328,28 @@ test_error()
 success_msg("Bellissimo! Take some time to enjoy the fruits of your labor and play around with the motion chart! In the next exercise you will start to place the icing on the cake.")
 ```
 
+
 --- type:NormalExercise lang:r xp:100 skills:1,4
 ##  googleVis - the interlude
 
-When working with a simple dataset to visualize, a single color and size for each observation is sufficient. But what if you like to know more? For example, how can you see at a glance which dots respresents which countries in your motion chart? Or how these different dots are proportionate to each other? 
+When working with a simple dataset to visualize, a single color and size for each observation is sufficient. But what if you like to know more? For example, how can you see at a glance which dot represents which country in your motion chart? Or how are these different dots proportionate to each other? 
 
 To make the motion chart even more understandable you can play with the size and color of each bubble. This way you can present more information into one motion chart. Doing this with googleVis is not that hard, again, you only have to play a little bit with the arguments. 
 
 Let's say you want to make a motion chart that displays the GDP of a country on the x-axis and the life expectancy on the y-axis. Furthermore, you think it would be nice if each country has a unique color, and the size of each bubble represents the size of the population of that country. Doing this via the `gvisMotionChart()` function will require adding 3 additional arguments to our existing function:
 
-- xvar = Here you place the column name of the variable to be plotted on the x-axis
-- yvar = Here you place the column name of the variable to be plotted on the y-axis 
-- sizevar = Here you provide the column name that will make the bubbles change size. 
+- `xvar`: Here you place the column name of the variable to be plotted on the x-axis
+- `yvar`: Here you place the column name of the variable to be plotted on the y-axis 
+- `sizevar`: Here you provide the column name that will make the bubbles change size. 
 
 Time to set this into action...
 
 *** =instructions
-- The code you wrote for `my_motion_graph` in the previous exercise is provided. Add the required additional arguments. 
-- Make sure the x-axis of your motion chart represents the GDP of a country, and the y-axis is life expectancy.  
-- The bubble size should increase if a country has a larger number of citizens.  
-- Do not forget to plot your new motion chart.
+- The code you wrote for `my_motion_graph` in the previous exercise is provided. Add the required additional arguments:
+  + Set `xvar` to `"GDP"`, as the x-axis represents the GDP of a country.
+  + Set `yvar` to `"Life Expectancy"`.
+  + Set `sizevar` so that the bubble size should increases if a country has a larger number of citizens.  
+- As before, use `plot()` to plot your updated chart.
 
 *** =hint
 You need to set three additional arguments in `gvisMotionChart()`: `xvar`, `yvar`, and `sizevar`. Check out the arguments you have already set.
@@ -357,21 +358,21 @@ You need to set three additional arguments in `gvisMotionChart()`: `xvar`, `yvar
 ```{r}
 library("googleVis")
 options(gvis.plot.tag = 'chart')
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex5.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
 ```
 
 
 *** =sample_code
 ```{r}
 # Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph = gvisMotionChart(development_motion,
-                                  idvar = "Country",
-                                  timevar = "Year",
-                                  xvar = ___,
-                                  ___,
-                                  ___,
-                                  options=list(height='automatic', 
-                                               width='automatic'))
+my_motion_graph <- gvisMotionChart(development_motion,
+                                   idvar = "Country",
+                                   timevar = "Year",
+                                   xvar = ___,
+                                   ___,
+                                   ___,
+                                   options = list(height = "automatic", 
+                                                  width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
 plot(my_motion_graph)
@@ -380,14 +381,14 @@ plot(my_motion_graph)
 *** =solution
 ```{r}
 # Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph = gvisMotionChart(development_motion,
-                                  idvar = "Country",
-                                  timevar = "Year",
-                                  xvar = "GDP",
-                                  yvar = "Life Expectancy",
-                                  sizevar = "Population",
-                                  options=list(height='automatic', 
-                                               width='automatic'))
+my_motion_graph <- ggvisMotionChart(development_motion,
+                                    idvar = "Country",
+                                    timevar = "Year",
+                                    xvar = "GDP",
+                                    yvar = "Life Expectancy",
+                                    sizevar = "Population",
+                                    options = list(height = "automatic", 
+                                                   width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
 plot(my_motion_graph)
@@ -396,13 +397,16 @@ plot(my_motion_graph)
 *** =sct
 ```{r}
 # Instructions 1
-test_function("gvisMotionChart", c("data", "idvar", "timevar", "xvar", "yvar", "sizevar") , eval = FALSE, 
-              not_called_msg = "You should use the `gvisMotionChart()` function in this exercise.",
-              incorrect_msg = "Make sure the `xvar` argument is set to 'GDP' and the `yvar` argument is set to 'Life Expectancy'.")
+test_function("gvisMotionChart", c("data", "idvar", "timevar"), eval = c(F, T, T),
+              incorrect_msg = "Don't change anything about the arguments you specified in the previous exercise.")
+test_function("gvisMotionChart", c("xvar", "yvar"),
+              incorrect_msg = "Make sure the `xvar` argument is set to `\"GDP\"` and the `yvar` argument is set to `\"Life Expectancy\"`.")
+test_function("gvisMotionChart", c("sizevar"), incorrect_msg = "Have you correctly specified the `sizevar` argument? The bubble size should scale according to `\"Population\"`...")
 
 # Instruction 1
-test_function("plot",
-              not_called_msg = "Do not forget to plot your new motion graph!")
+test_function("plot", "x", eval = FALSE, 
+              not_called_msg = "Do not forget to plot your updated motion graph!",
+              incorrect_msg = "Pass `my_motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
 success_msg("Fantastic! The plot looks great, but you could make one more adjustment to make the plot a little easier to see.")
@@ -444,8 +448,8 @@ my_motion_graph_log = gvisMotionChart(development_motion,
                                       xvar = ___,
                                       yvar = "Life Expectancy",
                                       sizevar = "Population",
-                                      options=list(height='automatic', 
-                                                   width='automatic'))
+                                      options = list(height = "automatic", 
+                                                  width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
 ```
@@ -462,8 +466,8 @@ my_motion_graph_log = gvisMotionChart(development_motion,
                                       xvar = "logGDP",
                                       yvar = "Life Expectancy",
                                       sizevar = "Population",
-                                      options=list(height='automatic', 
-                                                   width='automatic'))
+                                      options = list(height = "automatic", 
+                                                  width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
 plot(my_motion_graph_log)
