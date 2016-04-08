@@ -270,8 +270,8 @@ The [`gvisMotionChart()`](http://www.rdocumentation.org/packages/googleVis) func
 Note: the `options = list()` argument is necessary here to fit better in your viewing screen. 
 
 *** =instructions
-- Use the `gvisMotionChart()` function to create an interactive motion chart with R. Assign the output to `my_motion_graph`. What column names do you need to provide to the `idvar` and `timevar` if you know that the Hans Rosling moving bubbles represent countries, and their movement is based on the date? Pass the column names as strings.
-- Use the [`plot()`](http://www.rdocumentation.org/packages/Rssa/functions/plot) function on `my_motion_graph` to visualize your first motion graph. 
+- Use the `gvisMotionChart()` function to create an interactive motion chart with R. Assign the output to `motion_graph`. What column names do you need to provide to the `idvar` and `timevar` if you know that the Hans Rosling moving bubbles represent countries, and their movement is based on the date? Pass the column names as strings.
+- Use the [`plot()`](http://www.rdocumentation.org/packages/Rssa/functions/plot) function on `motion_graph` to visualize your first motion graph. 
 
 *** =hint
 The `idvar` argument should be equal to `"Country"` and the `timevar` argument to `"Year"`. 
@@ -288,13 +288,13 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/dat
 # development_motion is pre-loaded in your workspace
 
 # Create the interactive motion chart
-my_motion_graph <- gvisMotionChart(___,
-                                   idvar = ___,
-                                   timevar = ___,
-                                   options = list(height = "automatic", 
-                                                  width = "automatic"))
+motion_graph <- gvisMotionChart(___,
+                                idvar = ___,
+                                timevar = ___,
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
                                   
-# Plot you motion graph with the help of `plot()`
+# Plot motion_graph
 
 ```
 
@@ -303,14 +303,14 @@ my_motion_graph <- gvisMotionChart(___,
 # development_motion is pre-loaded in your workspace
 
 # Create the interactive motion chart
-my_motion_graph <- gvisMotionChart(development_motion,
-                                   idvar = "Country",
-                                   timevar = "Year",
-                                   options = list(height = "automatic", 
-                                                  width = "automatic"))
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
 
-# Plot you motion graph with the help of `plot()`
-plot(my_motion_graph)
+# Plot motion_graph
+plot(motion_graph)
 ```
 
 *** =sct
@@ -322,7 +322,7 @@ test_function("gvisMotionChart", c("idvar", "timevar"), incorrect_msg = "Make su
 # Instruction 2
 test_function("plot", "x", eval = F, 
               not_called_msg = "Do not forget to plot your new motion graph with `plot()`!", 
-              incorrect_msg = "Make sure to pass `my_motion_graph` to the `plot()` function.")
+              incorrect_msg = "Make sure to pass `motion_graph` to the `plot()` function.")
 
 test_error()
 success_msg("Bellissimo! Take some time to enjoy the fruits of your labor and play around with the motion chart! In the next exercise you will start to place the icing on the cake.")
@@ -345,9 +345,9 @@ Let's say you want to make a motion chart that displays the GDP of a country on 
 Time to set this into action...
 
 *** =instructions
-- The code you wrote for `my_motion_graph` in the previous exercise is provided. Add the required additional arguments:
-  + Set `xvar` to `"GDP"`, as the x-axis represents the GDP of a country.
-  + Set `yvar` to `"Life Expectancy"`.
+- The code you wrote for `motion_graph` in the previous exercise is provided. Add the required additional arguments:
+  + Set `xvar` to `"GDP"`.
+  + Set `yvar` to `"LifeExpectancy"`.
   + Set `sizevar` so that the bubble size should increases if a country has a larger number of citizens.  
 - As before, use `plot()` to plot your updated chart.
 
@@ -364,49 +364,47 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/dat
 
 *** =sample_code
 ```{r}
-# Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph <- gvisMotionChart(development_motion,
-                                   idvar = "Country",
-                                   timevar = "Year",
-                                   xvar = ___,
-                                   ___,
-                                   ___,
-                                   options = list(height = "automatic", 
-                                                  width = "automatic"))
+# Update the interactive motion chart
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                xvar = ___,
+                                ___,
+                                ___,
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
 
-# Plot your new motion graph with the help of `plot()`
-plot(my_motion_graph)
+# Plot motion_graph
+plot(motion_graph)
 ```
 
 *** =solution
 ```{r}
-# Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph <- ggvisMotionChart(development_motion,
-                                    idvar = "Country",
-                                    timevar = "Year",
-                                    xvar = "GDP",
-                                    yvar = "Life Expectancy",
-                                    sizevar = "Population",
-                                    options = list(height = "automatic", 
-                                                   width = "automatic"))
+# Update the interactive motion chart
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                xvar = "GDP",
+                                yvar = "LifeExpectancy",
+                                sizevar = "Population",
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
 
-# Plot your new motion graph with the help of `plot()`
-plot(my_motion_graph)
+# Plot motion_graph
+plot(motion_graph)
 ```
 
 *** =sct
 ```{r}
-# Instructions 1
 test_function("gvisMotionChart", c("data", "idvar", "timevar"), eval = c(F, T, T),
               incorrect_msg = "Don't change anything about the arguments you specified in the previous exercise.")
 test_function("gvisMotionChart", c("xvar", "yvar"),
-              incorrect_msg = "Make sure the `xvar` argument is set to `\"GDP\"` and the `yvar` argument is set to `\"Life Expectancy\"`.")
+              incorrect_msg = "Make sure the `xvar` argument is set to `\"GDP\"` and the `yvar` argument is set to `\"LifeExpectancy\"`.")
 test_function("gvisMotionChart", c("sizevar"), incorrect_msg = "Have you correctly specified the `sizevar` argument? The bubble size should scale according to `\"Population\"`...")
 
-# Instruction 1
 test_function("plot", "x", eval = FALSE, 
               not_called_msg = "Do not forget to plot your updated motion graph!",
-              incorrect_msg = "Pass `my_motion_graph` to `plot()` to plot your updated motion graph.")
+              incorrect_msg = "Pass `motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
 success_msg("Fantastic! The plot looks great, but you could make one more adjustment to make the plot a little easier to see.")
@@ -417,39 +415,35 @@ success_msg("Fantastic! The plot looks great, but you could make one more adjust
 
 That last plot looked awesome! There is clearly a relationship between a country's GDP per capita and life expectancy at birth. However, it looks like the relationship is non-linear. You should make a transformation to the data to see if you can make the plot easier to read. 
 
-
 *** =instructions
-- Create a new column in `development_motion` that corresponds to the log of the GDP column called "logGDP".
-- The code you wrote for `my_motion_graph_log` in the previous exercise is provided. Change the x-axis argument to our newly created logGDP column. 
-- Do not forget to plot your new motion chart.
+- Create a new column in `development_motion` that corresponds to the log of the GDP column. Call this collumn `logGDP`.
+- The code you wrote for `motion_graph` in the previous exercise is provided. Change the x-axis argument to our newly created `logGDP` column. 
+- As usual, plot `motion_graph` with `plot()`.
 
 *** =hint
 The argument you need to set the argument `xvar` to the log of GDP in the `gvisMotionChart()` function
 
 *** =pre_exercise_code
 ```{r}
-library("rdatamarket")
-library("plyr")
 library("googleVis")
 options(gvis.plot.tag = 'chart')
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex5.RData"))
-#load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/Country_Mapping.RData"))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
 ```
 
 *** =sample_code
 ```{r}
 # Create a new column that corresponds to the log of the GDP column
-
+development_motion$logGDP <- ___
 
 # Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph_log = gvisMotionChart(development_motion,
-                                      idvar = "Country",
-                                      timevar = "Year",
-                                      xvar = ___,
-                                      yvar = "Life Expectancy",
-                                      sizevar = "Population",
-                                      options = list(height = "automatic", 
-                                                  width = "automatic"))
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                xvar = "GDP",
+                                yvar = "LifeExpectancy",
+                                sizevar = "Population",
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
 ```
@@ -457,41 +451,37 @@ my_motion_graph_log = gvisMotionChart(development_motion,
 *** =solution
 ```{r}
 # Create a new column that corresponds to the log of the GDP column
-development_motion$logGDP = log(development_motion$GDP)
+development_motion$logGDP <- log(development_motion$GDP)
 
 # Create the interactive motion chart with R and `gvisMotionChart())`
-my_motion_graph_log = gvisMotionChart(development_motion,
-                                      idvar = "Country",
-                                      timevar = "Year",
-                                      xvar = "logGDP",
-                                      yvar = "Life Expectancy",
-                                      sizevar = "Population",
-                                      options = list(height = "automatic", 
-                                                  width = "automatic"))
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                xvar = "logGDP",
+                                yvar = "LifeExpectancy",
+                                sizevar = "Population",
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
 
 # Plot your new motion graph with the help of `plot()`
-plot(my_motion_graph_log)
+plot(motion_graph)
 ```
 
 *** =sct
 ```{r}
-# Instruction 1 from previous exercise
-msg = "Make sure you have created a new column `logGDP` in `development_motion"
-test_object("development_motion",
-            undefined_msg = msg,
-            incorrect_msg = msg)
+test_data_frame("development_motion", "logGDP",
+                incorrect_msg = "Have you correctly calculated the new column, `logGDP`? Use `log()` on `development_motion$GDP`.")
 
-# Instructions 2 and 3
-test_function("gvisMotionChart", c("data", "idvar", "timevar", "xvar", "yvar", "sizevar") , eval = FALSE, 
-              not_called_msg = "You should use the `gvisMotionChart()` function provided in this exercise.",
-              incorrect_msg = "Make sure the `xvar` argument is set to the log of the GDP column.")
+test_function("gvisMotionChart", c("data", "idvar", "timevar", "yvar", "sizevar"), eval = c(F, T, T, T, T),
+              incorrect_msg = "Apart from the `xvar` argument, nothing should be changed about the `gvisMotionChart` call!")
+test_function("gvisMotionChart", "xvar", incorrect_msg = "Have you correctly changed the `xvar` argument? You want to plot the `logGDP` column onto the x-axis now.")
 
-# Instruction 4
-test_function("plot",
-              not_called_msg = "Do not forget to plot your new motion graph!")
+test_function("plot", "x", eval = FALSE, 
+              not_called_msg = "Do not forget to plot your updated motion graph!",
+              incorrect_msg = "Pass `motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
-success_msg("Isn't that beautiful! Probably the best stats you've ever seen. Again, play around with the graph and get a good understanding of what it represents. Then head to the final question...")
+success_msg("Isn't that beautiful! Probably the best stats you've ever seen. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
 ```
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1,4
@@ -510,18 +500,14 @@ To test your understanding of the data, you end this demo chapter by solving the
 - 81,653,702 Germans producing a GDP of 30.89
 
 *** =hint
-You can still have a look at your interactive motion chart by typing `plot(my_motion_graph)` or `plot(my_motion_graph_log)` into the console. 
+You can still have a look at your interactive motion chart by typing `plot(motion_graph)` or `plot(motion_graph_log)` into the console. 
 
 *** =pre_exercise_code
 ```{r}
-library("rdatamarket")
-library("plyr")
 library("googleVis")
 options(gvis.plot.tag = 'chart')
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex5.RData"))
-development_motion$logGDP = log(development_motion$GDP)
-my_motion_graph = gvisMotionChart(development_motion,idvar = "Country",timevar = "Year",xvar = "GDP",yvar = "Life Expectancy",sizevar = "Population", options = list(width = 'automatic', height = 'automatic'))
-my_motion_graph_log = gvisMotionChart(development_motion,idvar = "Country",timevar = "Year",xvar = "logGDP",yvar = "Life Expectancy",sizevar = "Population",options=list(height='automatic', width='automatic'))
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/final_ex.RData"))
+plot(motion_graph)
 ```
 
 *** =sct

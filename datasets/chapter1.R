@@ -27,3 +27,18 @@ development_complete <- subset(development, Year <= 2008)
 development_motion <- subset(development_complete, Country %in% selection)
 
 save(development_motion, file = "datasets/ex4.RData")
+
+# Create a new column that corresponds to the log of the GDP column
+development_motion$logGDP <- log(development_motion$GDP)
+
+# Create the interactive motion chart with R and `gvisMotionChart())`
+motion_graph <- gvisMotionChart(development_motion,
+                                idvar = "Country",
+                                timevar = "Year",
+                                xvar = "logGDP",
+                                yvar = "LifeExpectancy",
+                                sizevar = "Population",
+                                options = list(height = "automatic", 
+                                               width = "automatic"))
+
+save(motion_graph, file = "datasets/final_ex.RData")
