@@ -12,20 +12,18 @@ description : In this chapter you will be introduced to gooleVis for R.
 --- type:NormalExercise lang:r xp:100 skills:1,4
 ##  Loading in your data
 
-What you just saw was one of the most famous ted talks on data and statistics. With the drama and urgency of a sportscaster, statistics guru [Hans Rosling](http://www.ted.com/speakers/hans_rosling) debunks myths about the so-called "developing world". But what sets Rosling apart isn't just his apt observations of broad social and economic trends, but the stunning way he presents them. Have you ever seen data presented like this? The data sings, trends come to life, and the big picture snaps into sharp focus.
+What you just saw was one of the most famous TED talks on data and statistics. With the drama and urgency of a sportscaster, statistics guru [Hans Rosling](http://www.ted.com/speakers/hans_rosling) debunks myths about the so-called "developing world". But what sets Rosling apart isn't just his apt observations of broad social and economic trends, but the stunning way he presents them. Have you ever seen data presented like this? The data sings, trends come to life, and the big picture snaps into sharp focus.
 
 In this demonstation, you will learn how to DIY with the help of R. Step-by-step you will transform development statistics into moving bubbles and flowing curves that make global trends clear, intuitive and even playful.
 
-First, you will need to load data on a country's evolution of life expectancy, GDP and population over the past years into R. We can get this data by using [DataMarket](https://datamarket.com/), a company that lets you freely search public data and load it into R with the [`rdatamarket`](http://www.rdocumentation.org/packages/rdatamarket/functions/rdatamarket-package) package. For the data you'll be using here, no account is needed. You will be using two R functions in this exercise:
+First, you will need to load data on a country's evolution of life expectancy, GDP and population over the past years into R. We can get this data by using [DataMarket](https://datamarket.com/), a company that lets you freely search public data and load it into R with the [`rdatamarket`](http://www.rdocumentation.org/packages/rdatamarket/functions/rdatamarket-package) package. 
 
-- [`dminit()`](http://www.rdocumentation.org/packages/rdatamarket/functions/dminit) to initialize a DataMarket client with an API key. Access to public datasets does not require such key, so you can provide the value `NULL`.     
-- [`dmlist()`](http://www.rdocumentation.org/packages/rdatamarket/functions/dmlist) requires the ID of the dataset you need, and will return a `data.frame` object.  
+Some code that initializes a DataMarket client with an empty API key (which works fine for public datasets) and then fetches life expectancy and population data has already been provided. Can you finish the script?
 
 *** =instructions
-- Initialize a DataMarket client using the provided command. 
-- The code to load in the yearly life expectancy data for countries is provided. Inspect the data frame `life_expectancy` with `head()` and/or `tail()`.  
-- Load in the yearly GDP (ID: 15c9!hd1) data frame for each country yourself. Assign the results to the variable `gdp`. 
-- The yearly population for each country is loaded and assigned to the variable `population`. Inspect this data frame with `head()` and/or `tail()`.    
+- Use `head()` or `tail()` to inspect both the `life_expectancy` and `population` data frame.
+- Use `dmlist()` to pull in data on yearly GDP for different countries. This time, use the ID `"15c9!hd1"`. Store the resulting data frame as `gdp`.
+- Time to inspect `gdp` again: use `tail()` this time, to inspect the last observations in `gdp`.
 
 *** =hint
 Have a look at the code for `life_expectancy` on how to load `gdp` and `population`. Do not forget, no API key is required. 
@@ -33,82 +31,75 @@ Have a look at the code for `life_expectancy` on how to load `gdp` and `populati
 *** =pre_exercise_code
 ```{r,eval=FALSE}
 library("rdatamarket")
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex1.RData"))
-population <- dmlist("1cfl!r3d")
 ```
 
 *** =sample_code
 ```{r}
-# Load the `rdatamarket` package
+# Load rdatamarket and initialize client
 library("rdatamarket")
-
-# Initialize a DataMarket client
 dminit(NULL)
 
-# Load in the yearly life expectancy data frame for each country as 'life_expectancy'
+# Pull in life expectancy and population data
 life_expectancy <- dmlist("15r2!hrp")
+population <- dmlist("1cfl!r3d")
 
-# Inspect `life_expectancy` with head() and/or tail()
-
-
-# Load in the yearly GDP data frame for each country as 'gdp'
+# Inspect life_expectancy and population with head() or tail()
 
 
-# The variable 'population' has been pre-loaded. Inspect it with head() and/or tail()
+
+# Load in the yearly GDP data frame for each country as gdp
+
+
+# Inspect gdp with tail()
 
 ```
 
 *** =solution
 ```{r}
-# Load the rdatamarket package
+# Load rdatamarket and initialize client
 library("rdatamarket")
-
-# Initialize a DataMarket client
 dminit(NULL)
 
-# Load in the yearly life_expectancy data frame for each country as 'life_expectancy'
+# Pull in life expectancy and population data
 life_expectancy <- dmlist("15r2!hrp")
+population <- dmlist("1cfl!r3d")
 
-# Inspect the variable life_expectancy with head() and/or tail()
+# Inspect life_expectancy and population with head() or tail()
 head(life_expectancy)
 tail(life_expectancy)
-
-# Load in the yearly GDP data frame for each country as 'gdp'
-gdp <- dmlist("15c9!hd1")
-
-# The variable 'population' has been pre-loaded. Inspect it with head() and/or tail()
 head(population)
 tail(population)
+
+# Load in the yearly GDP data frame for each country as gdp
+gdp <- dmlist("15c9!hd1")
+
+# Inspect gdp with head() or tail()
+head(gdp)
+tail(gdp)
 ```
 
 
 *** =sct
 ```{r}
+msg <- "Don't change the code that pulls in the life expectancy and population data. You can use the arrow next to Submit Answer to reset your code."
+test_object("life_expectancy", undefined_msg = msg, incorrect_msg = msg)
+test_object("population", undefined_msg = msg, incorrect_msg = msg)
 
-# Instruction 1 and 2
-test_object("life_expectancy",
-            undefined_msg = "Did you assign to `life_expectancy` to the evolution of a country's life expectancy over the past years?",
-            incorrect_msg = "Did you change the way to calculate the variable `life_expectancy`?")
-test_or(
-        test_output_contains("head(life_expectancy)"), 
+test_or(test_output_contains("head(life_expectancy)"), 
         test_output_contains("tail(life_expectancy)"),
-                             incorrect_msg = "Did you print the start and/or the end of the life expectancies data frame to the console?")
+        incorrect_msg = "Did you print the start and/or the end of the life expectancies data frame to the console?")
    
-# Instruction 3
-test_function("dmlist",
-              incorrect_msg = "Have a look at how the variable `life_expectancy` is created. Remember to use the key `15c9!hd1`")
-msg = "Have a look at how the variable `life_expectancy` is created. You should do something similar for gdp using the code `15c9!hd1`"
-test_object("gdp",
-            undefined_msg = msg,
-            incorrect_msg = msg)
+test_correct({
+  test_object("gdp", incorrect_msg = "There's still something wrong with `gdp`. Make sure to assign the result of `dmlist(\"15c9!hd1\"` to `gdp`.")
+}, {
+  test_function("dmlist", args = "ds", index = 3,
+              incorrect_msg = "Have you correclty used `dmlist()` to pull in the GDP data? Look at the other `dmlist()` calls as an example. Remember to use the key `\"15c9!hd1\"`.")
+})
 
-# Instruction 4
-test_or(
-        test_output_contains("head(population)"), 
-        test_output_contains("tail(population)"),
-                             incorrect_msg = "Did you print the start and/or the end of the `population` data frame to the console?")
+test_or(test_output_contains("head(gdp)"), 
+        test_output_contains("tail(gdp)"),
+                             incorrect_msg = "Did you print the first and/or the last observations in the `gdp` data frame? Use `head()` and/or `tail()`?")
 
-test_error(incorrect_msg = msg)
 success_msg("Good job! Now that you've imported the data, continue to the next exercise to start the real work.")
 ```
 
