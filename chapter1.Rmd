@@ -267,8 +267,6 @@ For this exercise, you will need to create your first motion chart. A motion cha
 
 The [`gvisMotionChart()`](http://www.rdocumentation.org/packages/googleVis) function in its simplest form takes 3 arguments. The first argument you need to provide is your data frame `development_motion` (which is pre-loaded). Next, you assign the subject to be analyzed to the `idvar` argument, and to the `timevar` argument the column name that contains the time dimension data. Et voila, your first motion chart with `googleVis` is ready! 
 
-Note: the `options = list()` argument is necessary here to fit better in your viewing screen. 
-
 *** =instructions
 - Use the `gvisMotionChart()` function to create an interactive motion chart with R. Assign the output to `motion_graph`. What column names do you need to provide to the `idvar` and `timevar` if you know that the Hans Rosling moving bubbles represent countries, and their movement is based on the date? Pass the column names as strings.
 - Use the [`plot()`](http://www.rdocumentation.org/packages/Rssa/functions/plot) function on `motion_graph` to visualize your first motion graph. 
@@ -290,9 +288,7 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/dat
 # Create the interactive motion chart
 motion_graph <- gvisMotionChart(___,
                                 idvar = ___,
-                                timevar = ___,
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                timevar = ___)
                                   
 # Plot motion_graph
 
@@ -305,9 +301,7 @@ motion_graph <- gvisMotionChart(___,
 # Create the interactive motion chart
 motion_graph <- gvisMotionChart(development_motion,
                                 idvar = "Country",
-                                timevar = "Year",
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                timevar = "Year")
 
 # Plot motion_graph
 plot(motion_graph)
@@ -325,7 +319,7 @@ test_function("plot", "x", eval = F,
               incorrect_msg = "Make sure to pass `motion_graph` to the `plot()` function.")
 
 test_error()
-success_msg("Bellissimo! Take some time to enjoy the fruits of your labor and play around with the motion chart! In the next exercise you will start to place the icing on the cake.")
+success_msg("Bellissimo! Take some time to enjoy the fruits of your labor and play around with the motion chart! You can check the chart in a separate window [here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/prelude.html). In the next exercise you will start to place the icing on the cake.")
 ```
 
 
@@ -370,9 +364,7 @@ motion_graph <- gvisMotionChart(development_motion,
                                 timevar = "Year",
                                 xvar = ___,
                                 ___,
-                                ___,
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                ___)
 
 # Plot motion_graph
 plot(motion_graph)
@@ -386,9 +378,7 @@ motion_graph <- gvisMotionChart(development_motion,
                                 timevar = "Year",
                                 xvar = "GDP",
                                 yvar = "LifeExpectancy",
-                                sizevar = "Population",
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                sizevar = "Population")
 
 # Plot motion_graph
 plot(motion_graph)
@@ -407,7 +397,7 @@ test_function("plot", "x", eval = FALSE,
               incorrect_msg = "Pass `motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
-success_msg("Fantastic! The plot looks great, but you could make one more adjustment to make the plot a little easier to see.")
+success_msg("Fantastic! For a full view of the plot, check [this page](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/interlude.html). The plot looks great, but you could make one more adjustment to make the plot a little easier to see.")
 ```
 
 --- type:NormalExercise lang:r xp:100 skills:1,4
@@ -457,9 +447,7 @@ motion_graph <- gvisMotionChart(development_motion,
                                 timevar = "Year",
                                 xvar = "logGDP",
                                 yvar = "LifeExpectancy",
-                                sizevar = "Population",
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                sizevar = "Population")
 
 # Plot your new motion graph with the help of `plot()`
 plot(motion_graph)
@@ -479,7 +467,7 @@ test_function("plot", "x", eval = FALSE,
               incorrect_msg = "Pass `motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
-success_msg("Isn't that beautiful! Probably the best stats you've ever seen. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
+success_msg("Isn't that beautiful! [Click here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/final_output.html) for a full view. Probably the best stats you've ever seen. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
 ```
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1,4
@@ -489,7 +477,7 @@ As mentioned in the beginning, the goal of these charts is (not only) to impress
 
 To test your understanding of the data, you end this demo chapter by solving the following multiple choice question: "What was the GDP of Germany in 1980, and what was the population size at that time?"   
 
-<i> All of the datasets and variables you constructed in the previous exercises are preloaded in your workspace.  Type 'ls()' in the console to see them.</i>
+The `development_motion` dataset is available in the workshop, if you want to play around with it.
 
 *** =instructions
 - 81,653,702 Germans producing a GDP of 12,092

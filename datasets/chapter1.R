@@ -1,7 +1,8 @@
 library("rdatamarket")
+library("googleVis")
 library("plyr")
-dminit(NULL)
 
+dminit(NULL)
 life_expectancy <- dmlist("15r2!hrp")
 population <- dmlist("1cfl!r3d")
 gdp <- dmlist("15c9!hd1")
@@ -28,17 +29,32 @@ development_motion <- subset(development_complete, Country %in% selection)
 
 save(development_motion, file = "datasets/ex4.RData")
 
-# Create a new column that corresponds to the log of the GDP column
-development_motion$logGDP <- log(development_motion$GDP)
+# first gvismotionchart
 
-# Create the interactive motion chart with R and `gvisMotionChart())`
-motion_graph <- gvisMotionChart(development_motion,
+prelude <- gvisMotionChart(development_motion,
+                           idvar = "Country",
+                           timevar = "Year")
+capture.output(plot(prelude, tag = "html"), file = "datasets/prelude.html")
+
+interlude <- gvisMotionChart(development_motion,
+                             idvar = "Country",
+                             timevar = "Year",
+                             xvar = "GDP",
+                             yvar = "LifeExpectancy",
+                             sizevar = "Population")
+capture.output(plot(prelude, tag = "html"), file = "datasets/interlude.html")
+
+development_motion$logGDP <- log(development_motion$GDP)
+final_output <- gvisMotionChart(development_motion,
                                 idvar = "Country",
                                 timevar = "Year",
                                 xvar = "logGDP",
                                 yvar = "LifeExpectancy",
-                                sizevar = "Population",
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                sizevar = "Population")
+capture.output(plot(prelude, tag = "html"), file = "datasets/final_output.html")
 
+motion_graph <- final_output
 save(development_motion, motion_graph, file = "datasets/final_ex.RData")
+
+
+
