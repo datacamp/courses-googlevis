@@ -41,4 +41,4 @@ motion_graph <- gvisMotionChart(development_motion,
                                 options = list(height = "automatic", 
                                                width = "automatic"))
 
-save(motion_graph, file = "datasets/final_ex.RData")
+save(development_motion, motion_graph, file = "datasets/final_ex.RData")

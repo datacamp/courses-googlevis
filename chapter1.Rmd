@@ -441,9 +441,7 @@ motion_graph <- gvisMotionChart(development_motion,
                                 timevar = "Year",
                                 xvar = "GDP",
                                 yvar = "LifeExpectancy",
-                                sizevar = "Population",
-                                options = list(height = "automatic", 
-                                               width = "automatic"))
+                                sizevar = "Population")
 
 # Plot your new motion graph with the help of `plot()`
 ```
