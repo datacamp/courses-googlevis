@@ -1,7 +1,0 @@
-*.html
-.DS_Store
-.Rproj.user/
-.Rproj.user/*
-.cache/
-.cache/*
-.Rproj.user
