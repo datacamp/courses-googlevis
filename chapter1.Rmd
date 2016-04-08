@@ -174,8 +174,8 @@ msg <- "Have you correctly renamed the `Value` column of `%s`? Take the code for
 test_data_frame("life_expectancy", "LifeExpectancy", undefined_cols_msg = sprintf(msg, "life_expectancy"), incorrect_msg = sprintf(msg, "life_expectancy"))
 test_data_frame("population", "Population", undefined_cols_msg = sprintf(msg, "life_expectancy"), incorrect_msg = sprintf(msg, "life_expectancy"))
 
-test_object("gdp_life_exp", msg = "Have you correctly joined `gdp` and `life_expectancy` to create `gdp_life_exp`?")
-test_object("development", msg = "Have you correclty joined `gdp_life_exp` and `population` to create `development`?")
+test_object("gdp_life_exp", incorrect_msg = "Have you correctly joined `gdp` and `life_expectancy` to create `gdp_life_exp`?")
+test_object("development", incorrect_msg = "Have you correclty joined `gdp_life_exp` and `population` to create `development`?")
 
 success_msg("Your data is almost ready! Only one more set of data preparations and you can start to make some sweet visualizations!")
 ```
