@@ -143,6 +143,7 @@ library("plyr")
 names(gdp)[3] <- "GDP"
 
 
+
 # Use plyr to join your three data frames into one: development 
 gdp_life_exp <- join(gdp, ___)
 development <- join(gdp_life_exp, ___)
@@ -180,8 +181,10 @@ test_object("development", incorrect_msg = "Have you correclty joined `gdp_life_
 success_msg("Your data is almost ready! Only one more set of data preparations and you can start to make some sweet visualizations!")
 ```
 
+
 --- type:NormalExercise lang:r xp:100 skills:1,4
 ##  Last data preps
+
 Now that you have merged your data, it would make sense to trim the data set. You can do this in 2 ways:
 
 - Take out data for years you know that have incomplete observations. In this case, the data is only complete up until 2008.
@@ -189,69 +192,69 @@ Now that you have merged your data, it would make sense to trim the data set. Yo
 
 One way to do this would be to make use of the `subset()` function. You can use this function to pull values from your data frame based on sets of conditions. For example, if you want to see only observations from 2005:
 
-`dev_2005 <- subset(development, Year == 2005)`
+```
+dev_2005 <- subset(development, Year == 2005)
+```
 
 Then if you want to see only countries that had a gdp of over 30,000 in 2005:
 
-`dev_2005_big <- subset(dev_2005, GDP >= 30000)`
+```
+dev_2005_big <- subset(dev_2005, GDP >= 30000)
+```
 
 Feel free to type `?subset` in the console to read more on how to use the function.
 
 *** =instructions
-- Take a subset from the `development` dataset that does not include the values after 2008. Then output the final few rows of the data frame with `tail()`.
-- To make sure the graph is not too busy, you will work with a subset of only a few countries. These countries are stored in the variable `selection`. Take a subset from `development` with only the countries in `selection` and name this dataset `development_motion`. The operator `%in%` will be helpful here.
+- Take a subset from the `development` dataset that contains observations whose `Year` variable is smaller than or equal to 2008. Store the result as `development_complete`.
+- Print out the final few rows of `development_complete` with `tail()`.
+- To make sure the graph is not too busy, you will work with a subset of only a few countries. These country names are stored in the variable `selection`. Take a subset from `development_complete` for which the `Country` variable is in `selection`. Name this dataset `development_motion`. The operator `%in%` will be helpful here.
 
 *** =hint
-Remember to use `subset()` to pull only years >= 2008 particular values from `development`. Then, make use of the `%in%` operator to only select values from the Country column that are in `selection`.
+- To build `develompent_complete`, use `subset()` on `development`, with the condition `Year <- 2008`. 
+- You can use the condition `Country %in% selection` for the second `subset()` operation.
 
 *** =pre_exercise_code
 
 ```{r,eval=FALSE}
 library("rdatamarket")
 library("plyr")
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex2.RData"))
-names(gdp)[3] <- "GDP"
-names(life_expectancy)[3] <- "LifeExpectancy"
-names(population)[3] <- "Population"
-development <- join(gdp,life_expectancy)
-development <- join(development,population)
-load(url("http://s3.amazonaws.com/assets.datacamp.com/course/googlevis/googlevis_ex3.RData"))
-selection <- c("Afghanistan","Australia","Austria","Belgium","Bolivia","Brazil","Cambodia","Azerbaijan", "Chile","China","Denmark","Estonia","Ethiopia","Finland","France","Georgia","Germany","Ghana","Greece","India","Indonesia","Iraq","Italy", "Japan","Lithuania","Luxembourg","Mexico","New Zealand", "Niger", "Norway", "Poland", "Portugal","Rwanda", "Somalia", "South Africa", "Spain", "Sweden", "Switzerland", "Turkey", "Uganda", "Ukraine", "United Kingdom", "United States", "Vietnam")
+load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex3.RData"))
 ```
 
 *** =sample_code
 ```{r}
-# Only include data on or before 2008 and inspect the tail of the data frame
-development <- subset(___, ___)
+# development and selection are available in the workspace
 
-# Include only the countries from `selection` in `development_motion`
-selection
+# Subset development with Year on or before 2008
+development_complete <- subset(___, ___)
+
+# Print out tail of development_complete
+
+
+# Subset development_complete: keep only countries in selection
 development_motion <- subset(___, ___)
-
 ```
 
 *** =solution
 ```{r}
-# Only include data on or before 2008 and inspect the tail of the data frame
-development <- subset(development, Year <= 2008)
-tail(development) 
+# development and selection are available in the workspace
 
-# Include only the countries from `selection` in `development_motion`
-selection
-development_motion <- subset(development, Country %in% selection)
+# Only include data on or before 2008 and inspect the tail of the data frame
+development_complete <- subset(development, Year <= 2008)
+
+# Print out tail of development_complete
+tail(development_complete) 
+
+# Subset development_complete: keep only countries in selection
+development_motion <- subset(development_complete, Country %in% selection)
 ```
 
 *** =sct
 ```{r}
-# Instruction 1
-test_output_contains("tail(development)", 
-                     incorrect_msg = "Don't forget to inspect the last few rows of `development`. The output should not contain any observations after 2008 and 5 columns.")
-                     
-# Instruction 2
-test_object("development_motion",
-            undefined_msg = "Make sure you have taken a subset from `development` including only the countries in `selection`.",
-            incorrect_msg = "You still need to work with a subset from `development`. Use the `subset()` function and the `selection` variable. ")
-
+test_object("development_complete", incorrect_msg = "`development_complete` is not correct. Have you correclty subsetted `development()`, to keep only observations with `Year <= 2008`?")
+test_output_contains("tail(development_complete)", 
+                     incorrect_msg = "Don't forget to inspect the last few rows of `development_complete`.")
+test_object("development_motion", incorrect_msg = "`development_motion` is not correct. Have you correclty subsetted `development_complete` to keep only observations with `Country %in% selection`?")
 test_error()
 success_msg("Looks like your data is ready to rumble! Time to make Hans Rosling proud.")
 ```
