@@ -429,7 +429,7 @@ development_motion$logGDP <- ___
 motion_graph <- gvisMotionChart(development_motion,
                                 idvar = "Country",
                                 timevar = "Year",
-                                xvar = "GDP",
+                                xvar = "___",
                                 yvar = "LifeExpectancy",
                                 sizevar = "Population")
 
