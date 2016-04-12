@@ -467,7 +467,7 @@ test_function("plot", "x", eval = FALSE,
               incorrect_msg = "Pass `motion_graph` to `plot()` to plot your updated motion graph.")
 
 test_error()
-success_msg("Isn't that beautiful! [Click here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/final_output.html) for a full view. Probably the best stats you've ever seen. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
+success_msg("Isn't that beautiful! [Click here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/final_output.html) for a full view. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
 ```
 
 --- type:MultipleChoiceExercise lang:r xp:50 skills:1,4
