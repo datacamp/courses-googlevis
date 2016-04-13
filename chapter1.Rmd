@@ -2,7 +2,7 @@
 title       : Discovering googleVis
 description : In this chapter you will be introduced to gooleVis for R. 
 
---- type:VideoExercise lang:r xp:50 skills:1
+--- type:VideoExercise aspect_ratio: 62.5 lang:r xp:50 skills:1
 ## Hans Rosling TED 2006
 
 *** =video_link
