@@ -480,8 +480,8 @@ To test your understanding of the data, you end this demo chapter by solving the
 The `development_motion` dataset is available in the workshop, if you want to play around with it.
 
 *** =instructions
-- 81,653,702 Germans producing a GDP of 12,092
-- 78,297,904 Germans producing a GDP of 11,746
+- 81,653,702 Germans producing a GDP of 11,746
+- 78,297,904 Germans producing a GDP of 12,092
 - 78,297,904 Germans producing a GDP of 72.7
 - 81,653,702 Germans producing a GDP of 30.89
 
