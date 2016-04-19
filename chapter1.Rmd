@@ -486,7 +486,7 @@ The `development_motion` dataset is available in the workshop, if you want to pl
 - 81,653,702 Germans producing a GDP of 30.89
 
 *** =hint
-You can still have a look at your interactive motion chart by typing `plot(motion_graph)` or `plot(motion_graph_log)` into the console. 
+You can still have a look at your interactive motion chart by typing `plot(motion_graph)` into the console. 
 
 *** =pre_exercise_code
 ```{r}
