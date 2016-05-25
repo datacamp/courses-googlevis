@@ -8,6 +8,9 @@ description : In this chapter you will be introduced to gooleVis for R.
 *** =video_link
 //player.vimeo.com/video/97249290
 
+*** =video_hls
+//videos.datacamp.com/transcoded/having-fun-with-googlevis/hls-googlevis+video.master.m3u8
+
 
 --- type:NormalExercise lang:r xp:100 skills:1,4 key:692450cb77
 ##  Loading in your data
