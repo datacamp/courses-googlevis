@@ -1,5 +1,4 @@
 title            : Having Fun with googleVis
-author_field     : Weston Stearns
 description      : In this demonstration, you will learn how to use the googleVis package in R to create a few
   beautiful interactive charts. The charts created in these exercises are inspired by the work of data guru
   <a href="http://www.ted.com/speakers/hans_rosling", target="_blank">Hans Rosling</a>. GoogleVis
@@ -9,7 +8,4 @@ description      : In this demonstration, you will learn how to use the googleVi
 author_bio       : Weston is a member of the DataCamp team and all-around stats guy. He is passionate about making
   education efficient and accessible with the help of technology. He holds a degree in statistics from Harvard where he also served
   as a teaching fellow.
-university       : DataCamp
-time_needed      : 1 hour
-difficulty_level : 1
-from             : 'r-base-prod:v1.0.2'
+from             : 'r-base-prod:v1.3.2'
