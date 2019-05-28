@@ -1,19 +1,32 @@
---- 
-title       : Discovering googleVis
-description : In this chapter you will be introduced to gooleVis for R. 
+---
+title: 'Discovering googleVis'
+description: 'In this chapter you will be introduced to gooleVis for R.'
+---
 
---- type:VideoExercise aspect_ratio: 62.5 lang:r xp:50 skills:1 key:0a6585decf
 ## Hans Rosling TED 2006
 
-*** =video_link
-//player.vimeo.com/video/97249290
+```yaml
+type: VideoExercise
+key: 0a6585decf
+lang: r
+xp: 50
+skills: 1
+video_link: //player.vimeo.com/video/97249290
+video_hls: //videos.datacamp.com/transcoded/1007_having-fun-with-googlevis/v1/hls-googlevis+video.master.m3u8
+```
 
-*** =video_hls
-//videos.datacamp.com/transcoded/1007_having-fun-with-googlevis/v1/hls-googlevis+video.master.m3u8
 
+---
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:692450cb77
-##  Loading in your data
+## Loading in your data
+
+```yaml
+type: NormalExercise
+key: 692450cb77
+lang: r
+xp: 100
+skills: 1,4
+```
 
 What you just saw was one of the most famous TED talks on data and statistics. With the drama and urgency of a sportscaster, data guru [Hans Rosling](http://www.ted.com/speakers/hans_rosling) debunks myths about the so-called "developing world". But what sets Rosling apart isn't just his apt observations of broad social and economic trends, but the stunning way he presents them. Have you ever seen data presented like this? The data sings, trends come to life, and the big picture snaps into sharp focus.
 
@@ -23,20 +36,20 @@ First, you will need to load data on a country's evolution of life expectancy, G
 
 Some code that initializes a DataMarket client with an empty API key (which works fine for public datasets) and then fetches life expectancy and population data has already been provided. Can you finish the script?
 
-*** =instructions
+`@instructions`
 - Use `head()` or `tail()` to inspect both the `life_expectancy` and `population` data frame.
 - Use `dmlist()` to pull in data on yearly GDP for different countries. This time, use the ID `"15c9!hd1"`. Store the resulting data frame as `gdp`.
 - Time to inspect `gdp` again: use `tail()` this time, to inspect the last observations in `gdp`.
 
-*** =hint
-Have a look at the code for `life_expectancy` on how to load `gdp` and `population`. Do not forget, no API key is required. 
+`@hint`
+Have a look at the code for `life_expectancy` on how to load `gdp` and `population`. Do not forget, no API key is required.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r,eval=FALSE}
 library("rdatamarket")
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # Load rdatamarket and initialize client
 library("rdatamarket")
@@ -57,7 +70,7 @@ population <- dmlist("1cfl!r3d")
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Load rdatamarket and initialize client
 library("rdatamarket")
@@ -81,8 +94,7 @@ head(gdp)
 tail(gdp)
 ```
 
-
-*** =sct
+`@sct`
 ```{r}
 msg <- "Don't change the code that pulls in the life expectancy and population data. You can use the arrow next to Submit Answer to reset your code."
 test_object("life_expectancy", undefined_msg = msg, incorrect_msg = msg)
@@ -106,9 +118,17 @@ test_or(test_output_contains("head(gdp)"),
 success_msg("Good job! Now that you've imported the data, continue to the next exercise to start the real work.")
 ```
 
+---
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:8ee4cdeac6
-##  Preparing the data
+## Preparing the data
+
+```yaml
+type: NormalExercise
+key: 8ee4cdeac6
+lang: r
+xp: 100
+skills: 1,4
+```
 
 Now you have the following three different datasets at your disposal: `life_expectancy`, `gdp`, and `population`. As of now, these datasets will always be preloaded in all the exercises' workspaces so you can access and use them at any time.  
 
@@ -119,25 +139,25 @@ If you've applied the [`head()`](http://www.rdocumentation.org/packages/multivat
 
 These issues should be fixed before you start creating your graph. In addition, if you want to map all three development statistics into one interactive graph (and you should because it is extremely cool), you will have to merge your three data frames into one called `development`. 
 
-In this exercise you will be required to do this with the [`join()`](http://www.rdocumentation.org/packages/adehabitatMA/html/join.html) function from the [`plyr()`](http://www.rdocumentation.org/packages/plyr/functions/plyr) package. You can read more on how to use it by typing `?join` in your console.      
+In this exercise you will be required to do this with the [`join()`](http://www.rdocumentation.org/packages/adehabitatMA/html/join.html) function from the [`plyr()`](http://www.rdocumentation.org/packages/plyr/functions/plyr) package. You can read more on how to use it by typing `?join` in your console.
 
-*** =instructions
+`@instructions`
 - The code to rename `Value` variable to `GDP` for the `gdp` dataset is provided. Now rename the column name `Value` in the other two datasets to respectively `Population` and `LifeExpectancy`.
 - Finish the `join()` calls so that:
   + `gdp` and `life_expectancy` are joined into `gdp_life_exp`, 
   + `gdp_life_exp` and `population` are joined into `development`.
   There's no need to specify additional arguments, because you want to join on all common variables (`Country` and `Year` in this case).
 
-*** =hint
+`@hint`
 Joining our three data frames into one is very easy in this case. If you have 3 datasets to join, `data_one`, `data_two` and `data_three`, on all common variables, you go in steps: `data_one_two <- join(data_one, data_two)` and then `data_total <- join(data_one_two, data_three)`. So every `join()` only needs two arguments here.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r,eval=FALSE}
 library("rdatamarket")
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex2.RData"))
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # Load in the plyr package
 library("plyr")
@@ -152,7 +172,7 @@ gdp_life_exp <- join(gdp, ___)
 development <- join(gdp_life_exp, ___)
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Load in the plyr package
 library("plyr")
@@ -167,8 +187,7 @@ gdp_life_exp <- join(gdp, life_expectancy)
 development <- join(gdp_life_exp, population)
 ```
 
-
-*** =sct
+`@sct`
 ```{r}
 test_error()
 
@@ -184,9 +203,17 @@ test_object("development", incorrect_msg = "Have you correclty joined `gdp_life_
 success_msg("Your data is almost ready! Only one more set of data preparations and you can start to make some sweet visualizations!")
 ```
 
+---
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:eba2e8eb5b
-##  Last data preps
+## Last data preps
+
+```yaml
+type: NormalExercise
+key: eba2e8eb5b
+lang: r
+xp: 100
+skills: 1,4
+```
 
 Now that you have merged your data, it would make sense to trim the data set. You can do this in 2 ways:
 
@@ -207,23 +234,23 @@ dev_2005_big <- subset(dev_2005, GDP >= 30000)
 
 Feel free to type `?subset` in the console to read more on how to use the function.
 
-*** =instructions
+`@instructions`
 - Take a subset from the `development` dataset that contains observations whose `Year` variable is smaller than or equal to 2008. Store the result as `development_complete`.
 - Print out the final few rows of `development_complete` with `tail()`.
 - To make sure the graph is not too busy, you will work with a subset of only a few countries. These country names are stored in the variable `selection`. Take a subset from `development_complete` for which the `Country` variable is in `selection`. Name this dataset `development_motion`. The operator `%in%` will be helpful here.
 
-*** =hint
+`@hint`
 - To build `develompent_complete`, use `subset()` on `development`, with the condition `Year <- 2008`. 
 - You can use the condition `Country %in% selection` for the second `subset()` operation.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r,eval=FALSE}
 library("rdatamarket")
 library("plyr")
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex3.RData"))
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # development and selection are available in the workspace
 
@@ -237,7 +264,7 @@ development_complete <- subset(___, ___)
 development_motion <- subset(___, ___)
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # development and selection are available in the workspace
 
@@ -251,7 +278,7 @@ tail(development_complete)
 development_motion <- subset(development_complete, Country %in% selection)
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_object("development_complete", incorrect_msg = "`development_complete` is not correct. Have you correclty subsetted `development()`, to keep only observations with `Year <= 2008`?")
 test_output_contains("tail(development_complete)", 
@@ -261,30 +288,39 @@ test_error()
 success_msg("Looks like your data is ready to rumble! Time to make Hans Rosling proud.")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:8909f97907
-##  googleVis - the prelude
+---
+
+## googleVis - the prelude
+
+```yaml
+type: NormalExercise
+key: 8909f97907
+lang: r
+xp: 100
+skills: 1,4
+```
 
 Time to start the magic! In the next exercises, you will be introduced to the [`googleVis`](http://www.rdocumentation.org/packages/googleVis) package. This package provides an interface between R and the [Google Chart Tools](https://developers.google.com/chart/). As with every package, `googleVis` give you access to various functions. Here they will allow you to visualize data with the Google Chart Tools without uploading your data to Google. 
 
 For this exercise, you will need to create your first motion chart. A motion chart is a dynamic chart to explore several indicators over time. To create a motion chart with the [`googleVis`](http://www.rdocumentation.org/packages/googleVis) package, you will need to use the [`gvisMotionChart()`](http://www.rdocumentation.org/packages/googleVis) function (what's in a name?). The beauty of this function is in its simplicity, and the huge range of tweaks you can do to prettify your graph.  
 
-The [`gvisMotionChart()`](http://www.rdocumentation.org/packages/googleVis) function in its simplest form takes 3 arguments. The first argument you need to provide is your data frame `development_motion` (which is pre-loaded). Next, you assign the subject to be analyzed to the `idvar` argument, and to the `timevar` argument the column name that contains the time dimension data. Et voila, your first motion chart with `googleVis` is ready! 
+The [`gvisMotionChart()`](http://www.rdocumentation.org/packages/googleVis) function in its simplest form takes 3 arguments. The first argument you need to provide is your data frame `development_motion` (which is pre-loaded). Next, you assign the subject to be analyzed to the `idvar` argument, and to the `timevar` argument the column name that contains the time dimension data. Et voila, your first motion chart with `googleVis` is ready!
 
-*** =instructions
+`@instructions`
 - Use the `gvisMotionChart()` function to create an interactive motion chart with R. Assign the output to `motion_graph`. What column names do you need to provide to the `idvar` and `timevar` if you know that the Hans Rosling moving bubbles represent countries, and their movement is based on the date? Pass the column names as strings.
-- Use the [`plot()`](http://www.rdocumentation.org/packages/Rssa/functions/plot) function on `motion_graph` to visualize your first motion graph. 
+- Use the [`plot()`](http://www.rdocumentation.org/packages/Rssa/functions/plot) function on `motion_graph` to visualize your first motion graph.
 
-*** =hint
-The `idvar` argument should be equal to `"Country"` and the `timevar` argument to `"Year"`. 
+`@hint`
+The `idvar` argument should be equal to `"Country"` and the `timevar` argument to `"Year"`.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r,eval=FALSE}
 library("googleVis")
 options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # development_motion is pre-loaded in your workspace
 
@@ -297,7 +333,7 @@ motion_graph <- gvisMotionChart(___,
 
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # development_motion is pre-loaded in your workspace
 
@@ -310,7 +346,7 @@ motion_graph <- gvisMotionChart(development_motion,
 plot(motion_graph)
 ```
 
-*** =sct
+`@sct`
 ```{r}
 # Instruction 1
 test_function("gvisMotionChart", c("data"), eval = F, incorrect_msg = "The first argument you pass to `gvisMotionChart()` should be `development_motion`.")
@@ -325,9 +361,17 @@ test_error()
 success_msg("Bellissimo! Take some time to enjoy the fruits of your labor and play around with the motion chart! You can check the chart in a separate window [here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/prelude.html). In the next exercise you will start to place the icing on the cake.")
 ```
 
+---
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:ad3c2b1839
-##  googleVis - the interlude
+## googleVis - the interlude
+
+```yaml
+type: NormalExercise
+key: ad3c2b1839
+lang: r
+xp: 100
+skills: 1,4
+```
 
 When working with a simple dataset to visualize, a single color and size for each observation is sufficient. But what if you like to know more? For example, how can you see at a glance which dot represents which country in your motion chart? Or how are these different dots proportionate to each other? 
 
@@ -341,25 +385,24 @@ Let's say you want to make a motion chart that displays the GDP of a country on 
 
 Time to set this into action...
 
-*** =instructions
+`@instructions`
 - The code you wrote for `motion_graph` in the previous exercise is provided. Add the required additional arguments:
   + Set `xvar` to `"GDP"`.
   + Set `yvar` to `"LifeExpectancy"`.
   + Set `sizevar` so that the bubble size should increases if a country has a larger number of citizens.  
 - As before, use `plot()` to plot your updated chart.
 
-*** =hint
+`@hint`
 You need to set three additional arguments in `gvisMotionChart()`: `xvar`, `yvar`, and `sizevar`. Check out the arguments you have already set.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library("googleVis")
 options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
 ```
 
-
-*** =sample_code
+`@sample_code`
 ```{r}
 # Update the interactive motion chart
 motion_graph <- gvisMotionChart(development_motion,
@@ -373,7 +416,7 @@ motion_graph <- gvisMotionChart(development_motion,
 plot(motion_graph)
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Update the interactive motion chart
 motion_graph <- gvisMotionChart(development_motion,
@@ -387,7 +430,7 @@ motion_graph <- gvisMotionChart(development_motion,
 plot(motion_graph)
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_function("gvisMotionChart", c("data", "idvar", "timevar"), eval = c(F, T, T),
               incorrect_msg = "Don't change anything about the arguments you specified in the previous exercise.")
@@ -403,27 +446,36 @@ test_error()
 success_msg("Fantastic! For a full view of the plot, check [this page](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/interlude.html). The plot looks great, but you could make one more adjustment to make the plot a little easier to see.")
 ```
 
---- type:NormalExercise lang:r xp:100 skills:1,4 key:76a5556f03
-##  googleVis - final output
+---
 
-That last plot looked awesome! There is clearly a relationship between a country's GDP per capita and life expectancy at birth. However, it looks like the relationship is non-linear. You should make a transformation to the data to see if you can make the plot easier to read. 
+## googleVis - final output
 
-*** =instructions
+```yaml
+type: NormalExercise
+key: 76a5556f03
+lang: r
+xp: 100
+skills: 1,4
+```
+
+That last plot looked awesome! There is clearly a relationship between a country's GDP per capita and life expectancy at birth. However, it looks like the relationship is non-linear. You should make a transformation to the data to see if you can make the plot easier to read.
+
+`@instructions`
 - Create a new column in `development_motion` that corresponds to the log of the GDP column. Call this collumn `logGDP`.
 - The code you wrote for `motion_graph` in the previous exercise is provided. Change the x-axis argument to our newly created `logGDP` column. 
 - As usual, plot `motion_graph` with `plot()`.
 
-*** =hint
+`@hint`
 The argument you need to set the argument `xvar` to the log of GDP in the `gvisMotionChart()` function
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library("googleVis")
 options(gvis.plot.tag = 'chart')
 load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/ex4.RData"))
 ```
 
-*** =sample_code
+`@sample_code`
 ```{r}
 # Create a new column that corresponds to the log of the GDP column
 development_motion$logGDP <- ___
@@ -439,7 +491,7 @@ motion_graph <- gvisMotionChart(development_motion,
 # Plot your new motion graph with the help of `plot()`
 ```
 
-*** =solution
+`@solution`
 ```{r}
 # Create a new column that corresponds to the log of the GDP column
 development_motion$logGDP <- log(development_motion$GDP)
@@ -456,7 +508,7 @@ motion_graph <- gvisMotionChart(development_motion,
 plot(motion_graph)
 ```
 
-*** =sct
+`@sct`
 ```{r}
 test_data_frame("development_motion", "logGDP",
                 incorrect_msg = "Have you correctly calculated the new column, `logGDP`? Use `log()` on `development_motion$GDP`.")
@@ -473,8 +525,17 @@ test_error()
 success_msg("Isn't that beautiful! [Click here](http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/datasets/final_output.html) for a full view. Again, play around with the graph and get a good understanding of what it represents. Then head over to the final question...")
 ```
 
---- type:MultipleChoiceExercise lang:r xp:50 skills:1,4 key:1fd167fb38
-##  googleVis - the recessional
+---
+
+## googleVis - the recessional
+
+```yaml
+type: MultipleChoiceExercise
+key: 1fd167fb38
+lang: r
+xp: 50
+skills: 1,4
+```
 
 As mentioned in the beginning, the goal of these charts is (not only) to impress your audience, but also to visualize trends and to provide a more clear view on the data and the corresponding insights. 
 
@@ -482,16 +543,16 @@ To test your understanding of the data, you end this demo chapter by solving the
 
 The `development_motion` dataset is available in the workshop, if you want to play around with it.
 
-*** =instructions
+`@possible_answers`
 - 81,653,702 Germans producing a GDP of 11,746
 - 78,297,904 Germans producing a GDP of 12,092
 - 78,297,904 Germans producing a GDP of 72.7
 - 81,653,702 Germans producing a GDP of 30.89
 
-*** =hint
-You can still have a look at your interactive motion chart by typing `plot(motion_graph)` into the console. 
+`@hint`
+You can still have a look at your interactive motion chart by typing `plot(motion_graph)` into the console.
 
-*** =pre_exercise_code
+`@pre_exercise_code`
 ```{r}
 library("googleVis")
 options(gvis.plot.tag = 'chart')
@@ -499,7 +560,7 @@ load(url("http://s3.amazonaws.com/assets.datacamp.com/production/course_1007/dat
 plot(motion_graph)
 ```
 
-*** =sct
+`@sct`
 ```{r,eval=FALSE}
 msg <- "Have another look at your graph. Use the hint if you need extra help."
 okmsg <- "Wunderbar! We hope you enjoyed doing this demo on DataCamp. In the future, we plan to do more courses on using interactive visualizations to analyze and present your data via R and googleVis. In the meantime, keep practicing, and maybe you can, sometime, share the stage with Hans Rosling."
