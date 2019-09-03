@@ -16,7 +16,5 @@ author_bio: >-
   technology. He holds a degree in statistics from Harvard where he also served
   as a teaching fellow.
 university: DataCamp
-time_needed: 1 hour
-difficulty_level: 1
 from: 'r-base-prod:27'
 programming_language: r
